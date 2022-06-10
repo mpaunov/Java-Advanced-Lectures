@@ -2,39 +2,39 @@ package dataStructuresWorkshop;
 
 import java.util.function.Consumer;
 
-public class MyStack {
+public class MyStack<E> {
 
-    private static class Node {
-        private int element;
-        private Node prev;
+    private static class Node<T> {
+        private T element;
+        private Node<T> prev;
 
-        public Node(int element, Node prev) {
+        public Node(T element, Node prev) {
             this.element = element;
             this.prev = prev;
         }
     }
 
-    private Node top;
+    private Node<E> top;
     private int size;
 
     public MyStack() {
     }
 
-    public void push(int element) {
-        Node newNode = new Node(element, this.top);
+    public void push(E element) {
+        Node<E> newNode = new Node<>(element, this.top);
         this.top = newNode;
         this.size++;
     }
 
-    public int pop() {
+    public E pop() {
         ensureNotEmpty();
-        int element = this.top.element;
+        E element = this.top.element;
         this.top = this.top.prev;
         this.size--;
         return element;
     }
 
-    public int peek() {
+    public E peek() {
         ensureNotEmpty();
         return this.top.element;
     }
@@ -43,8 +43,8 @@ public class MyStack {
         return this.size;
     }
 
-    public void forEach(Consumer<Integer> consumer) {
-        Node current = this.top;
+    public void forEach(Consumer<E> consumer) {
+        Node<E> current = this.top;
 
         while (current != null) {
             consumer.accept(current.element);
