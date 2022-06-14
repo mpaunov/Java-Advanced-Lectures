@@ -1,14 +1,35 @@
 package dataStructuresWorkshop;
 
-import java.util.function.Consumer;
+import java.util.Iterator;
 
-public class SmartArray<E> {
+public class SmartArray<E> implements Iterable<E> {
     private Object[] data;
     private int size;
 
     public SmartArray() {
         this.data = new Object[4];
         this.size = 0;
+    }
+
+    private class SmartArrayIterator implements Iterator<E> {
+        private int i = 0;
+
+        @Override
+        public boolean hasNext() {
+            return i < size;
+        }
+
+        @Override
+        public E next() {
+            E element = get(i);
+            i++;
+            return element;
+        }
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new SmartArrayIterator();
     }
 
     public void add(E element) {
@@ -73,13 +94,6 @@ public class SmartArray<E> {
         this.data[index] = element;
 
         add(lastElement);
-    }
-
-    public void forEach(Consumer<E> consumer) {
-        for (int i = 0; i < this.size; i++) {
-            E e = get(i);
-            consumer.accept(e);
-        }
     }
 
     private void validateIndex(int index) {

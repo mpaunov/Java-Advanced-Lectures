@@ -1,8 +1,27 @@
 package dataStructuresWorkshop;
 
-import java.util.function.Consumer;
+import java.util.Iterator;
 
-public class MyStack<E> {
+public class MyStack<E> implements Iterable<E> {
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
+            private Node<E> current = top;
+
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            @Override
+            public E next() {
+                E element = current.element;
+                current = current.prev;
+                return element;
+            }
+        };
+    }
 
     private static class Node<T> {
         private T element;
@@ -41,15 +60,6 @@ public class MyStack<E> {
 
     public int size() {
         return this.size;
-    }
-
-    public void forEach(Consumer<E> consumer) {
-        Node<E> current = this.top;
-
-        while (current != null) {
-            consumer.accept(current.element);
-            current = current.prev;
-        }
     }
 
     private void ensureNotEmpty() {
