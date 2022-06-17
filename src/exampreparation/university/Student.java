@@ -1,4 +1,4 @@
-package university;
+package exampreparation.university;
 
 public class Student {
     public String firstName;
